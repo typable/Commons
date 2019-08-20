@@ -1,6 +1,6 @@
-package com.prototype.parse;
+package com.core.parse;
 
-import com.prototype.type.Property;
+import com.core.lang.Property;
 
 
 public class PropertyParser implements Parser<Property<String>, String> {

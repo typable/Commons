@@ -1,4 +1,4 @@
-package com.prototype.util;
+package com.core.base;
 
 public class Condition {
 
@@ -7,9 +7,47 @@ public class Condition {
 		return a != null;
 	}
 
+	@SafeVarargs
+	public static <T> boolean notNull(T... a) {
+
+		for(T t : a) {
+
+			if(isNull(t)) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	public static <T> boolean isNull(T a) {
 
 		return a == null;
+	}
+
+	@SafeVarargs
+	public static <T> boolean isNull(T... a) {
+
+		for(T t : a) {
+
+			if(notNull(t)) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public static boolean isTrue(Boolean a) {
+
+		return a == true;
+	}
+
+	public static boolean isFalse(Boolean a) {
+
+		return a == false;
 	}
 
 	public static boolean notBlank(String a) {

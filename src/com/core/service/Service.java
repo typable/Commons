@@ -1,4 +1,4 @@
-package com.prototype.service;
+package com.core.service;
 
 import java.io.Closeable;
 import java.util.UUID;

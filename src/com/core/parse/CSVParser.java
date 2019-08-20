@@ -1,6 +1,6 @@
-package com.prototype.parse;
+package com.core.parse;
 
-import com.prototype.type.CSVObject;
+import com.core.type.CSVObject;
 
 
 public class CSVParser implements Parser<CSVObject, String> {

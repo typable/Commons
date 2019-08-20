@@ -1,4 +1,4 @@
-package com.prototype.reflect;
+package com.core.reflect;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Inject {
 
-	String name();
+	String code();
 }

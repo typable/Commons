@@ -1,4 +1,4 @@
-package com.prototype.parse;
+package com.core.parse;
 
 public interface Parser<T, S> {
 

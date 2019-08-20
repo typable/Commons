@@ -1,4 +1,4 @@
-package com.prototype.net;
+package com.core.net;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,6 +12,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 import javax.net.ssl.SSLSocketFactory;
+
+import com.core.base.Environment;
 
 
 /**
@@ -69,7 +71,7 @@ public class Connection {
 		this.port = port;
 		this.isSSL = isSSL;
 
-		LINE_BREAK = (isUNIX() ? LF : CRLF).getBytes(CHARSET);
+		LINE_BREAK = Environment.lineBreak().getBytes(CHARSET);
 	}
 
 	/**
@@ -178,67 +180,36 @@ public class Connection {
 		return String.valueOf(buffer).getBytes(CHARSET);
 	}
 
-	/**
-	 * Check if it is UNIX
-	 */
-	private boolean isUNIX() {
-
-		final String osName = System.getProperty("os.name");
-
-		return !osName.startsWith("Windows");
-	}
-
-	/**
-	 * Returns socket
-	 **/
 	public Socket getSocket() {
 
 		return socket;
 	}
 
-	/**
-	 * Returns reader
-	 */
 	public BufferedReader getReader() {
 
 		return reader;
 	}
 
-	/**
-	 * Returns in
-	 **/
 	public InputStream getIn() {
 
 		return in;
 	}
 
-	/**
-	 * Returns out
-	 **/
 	public OutputStream getOut() {
 
 		return out;
 	}
 
-	/**
-	 * Returns host
-	 **/
 	public String getHost() {
 
 		return host;
 	}
 
-	/**
-	 * Returns port
-	 **/
 	public int getPort() {
 
 		return port;
 	}
 
-	/**
-	 * Returns isSSL
-	 **/
 	public boolean isSSL() {
 
 		return isSSL;

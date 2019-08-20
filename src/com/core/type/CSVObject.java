@@ -1,7 +1,9 @@
-package com.prototype.type;
+package com.core.type;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.core.lang.Property;
 
 
 public class CSVObject {
