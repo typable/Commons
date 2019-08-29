@@ -1,4 +1,4 @@
-package com.prototype.util;
+package com.core.loader;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
