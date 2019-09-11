@@ -28,7 +28,7 @@ public class AutoPopulator<T> implements Populator<T, ResultSet> {
 				}
 				catch(SQLException ex) {
 
-					// ex.printStackTrace();
+					ex.printStackTrace();
 				}
 				catch(Exception ex) {
 

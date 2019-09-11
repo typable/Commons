@@ -1,25 +1,22 @@
 package com.core.service;
 
-import java.io.Closeable;
-import java.util.UUID;
+public class Service {
 
-
-public abstract class Service implements Runnable, Closeable, AutoCloseable {
-
-	private UUID uuid;
+	private boolean state;
 
 	public Service() {
 
-		//
+		// TODO Auto-generated constructor stub
 	}
 
-	public UUID getUuid() {
+	public boolean isState() {
 
-		return uuid;
+		return state;
 	}
 
-	public void setUuid(UUID uuid) {
+	public void setState(boolean state) {
 
-		this.uuid = uuid;
+		this.state = state;
 	}
+
 }
