@@ -2,13 +2,13 @@ package com.core.base;
 
 public class Condition {
 
-	public static <T> boolean notNull(T a) {
+	public static <T> boolean isNotNull(T a) {
 
 		return a != null;
 	}
 
 	@SafeVarargs
-	public static <T> boolean notNull(T... a) {
+	public static <T> boolean isNotNull(T... a) {
 
 		for(T t : a) {
 
@@ -31,7 +31,7 @@ public class Condition {
 
 		for(T t : a) {
 
-			if(notNull(t)) {
+			if(isNotNull(t)) {
 
 				return false;
 			}
@@ -50,28 +50,28 @@ public class Condition {
 		return a == false;
 	}
 
-	public static boolean notBlank(String a) {
+	public static boolean isNotBlank(String a) {
 
-		return notNull(a) && !a.isBlank();
+		return isNotNull(a) && !a.isBlank();
 	}
 
 	public static boolean isBlank(String a) {
 
-		return notNull(a) && a.isBlank();
+		return isNotNull(a) && a.isBlank();
 	}
 
-	public static boolean notEmpty(String a) {
+	public static boolean isNotEmpty(String a) {
 
-		return notNull(a) && !a.isEmpty();
+		return isNotNull(a) && !a.isEmpty();
 	}
 
 	public static boolean isEmpty(String a) {
 
-		return notNull(a) && a.isEmpty();
+		return isNotNull(a) && a.isEmpty();
 	}
 
 	public static boolean equals(String a, String b) {
 
-		return notNull(a) && notNull(b) && a.equals(b);
+		return isNotNull(a, b) && a.equals(b);
 	}
 }
