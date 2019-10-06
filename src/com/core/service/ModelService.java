@@ -1,22 +1,21 @@
 package com.core.service;
 
 import java.lang.reflect.Field;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.core.model.Model;
-import com.core.populate.ModelPopulator;
+import com.core.sql.Database;
+import com.core.sql.TypedQuery;
 
 
-public class ModelService extends DatabaseService {
+public class ModelService {
 
-	public ModelService(String url) {
+	private Database database;
 
-		super(url);
+	public ModelService(Database database) {
+
+		this.database = database;
 	}
 
 	public <T extends Model> boolean save(String table, T model) {
@@ -25,7 +24,14 @@ public class ModelService extends DatabaseService {
 
 			Map<String, String> map = extract(model);
 
-			return getDatabase().querySet("INSERT INTO " + table + " (id, " + String.join(", ", map.keySet()) + ") VALUES ('" + model.getId() + "', " + String.join(", ", map.values()) + ")");
+			if(model.getId() != null) {
+
+				return database.execute("INSERT INTO " + table + " (id, " + String.join(", ", map.keySet()) + ") VALUES ('" + model.getId() + "', " + String.join(", ", map.values()) + ")");
+			}
+			else {
+
+				return database.execute("INSERT INTO " + table + " (" + String.join(", ", map.keySet()) + ") VALUES ('" + String.join(", ", map.values()) + ")");
+			}
 		}
 		catch(Exception ex) {
 
@@ -50,7 +56,7 @@ public class ModelService extends DatabaseService {
 
 			updates = updates.substring(0, updates.lastIndexOf(", "));
 
-			return getDatabase().querySet("UPDATE " + table + " SET " + updates + " WHERE id LIKE '" + model.getId() + "'");
+			return database.execute("UPDATE " + table + " SET " + updates + " WHERE id LIKE '" + model.getId() + "'");
 		}
 		catch(Exception ex) {
 
@@ -62,38 +68,19 @@ public class ModelService extends DatabaseService {
 
 	public <T extends Model> T get(String table, String id, Class<T> type) {
 
-		T model = null;
+		TypedQuery<T> query = database.query("SELECT * FROM " + table + " WHERE id LIKE '" + id + "'", type);
 
-		try(Connection connection = getDatabase().connect()) {
+		if(query.next()) {
 
-			Statement statement = connection.createStatement();
-
-			ResultSet set = statement.executeQuery("SELECT * FROM " + table + " WHERE id LIKE '" + id + "'");
-
-			if(set.next()) {
-
-				model = type.getConstructor().newInstance();
-
-				ModelPopulator<T> populator = new ModelPopulator<>();
-
-				populator.populate(model, set);
-			}
-		}
-		catch(SQLException ex) {
-
-			ex.printStackTrace();
-		}
-		catch(Exception ex) {
-
-			ex.printStackTrace();
+			return query.get();
 		}
 
-		return model;
+		return null;
 	}
 
 	public boolean delete(String table, String id) {
 
-		return getDatabase().querySet("DELETE FROM " + table + " WHERE id LIKE '" + id + "'");
+		return database.execute("DELETE FROM " + table + " WHERE id LIKE '" + id + "'");
 	}
 
 	public <T extends Model> boolean has(String table, String id, Class<T> type) {
@@ -129,5 +116,10 @@ public class ModelService extends DatabaseService {
 		}
 
 		return map;
+	}
+
+	public Database getDatabase() {
+
+		return database;
 	}
 }

@@ -7,38 +7,42 @@ public class Condition {
 		return a != null;
 	}
 
+	/*
 	@SafeVarargs
 	public static <T> boolean isNotNull(T... a) {
-
+	
 		for(T t : a) {
-
+	
 			if(isNull(t)) {
-
+	
 				return false;
 			}
 		}
-
+	
 		return true;
 	}
+	*/
 
 	public static <T> boolean isNull(T a) {
 
 		return a == null;
 	}
 
+	/*
 	@SafeVarargs
 	public static <T> boolean isNull(T... a) {
-
+	
 		for(T t : a) {
-
+	
 			if(isNotNull(t)) {
-
+	
 				return false;
 			}
 		}
-
+	
 		return true;
 	}
+	*/
 
 	public static boolean isTrue(Boolean a) {
 
@@ -72,6 +76,6 @@ public class Condition {
 
 	public static boolean equals(String a, String b) {
 
-		return isNotNull(a, b) && a.equals(b);
+		return isNotNull(b) && isNotNull(b) && a.equals(b);
 	}
 }
