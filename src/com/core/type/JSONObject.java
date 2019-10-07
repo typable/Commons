@@ -1,7 +1,9 @@
 package com.core.type;
 
 import com.core.lang.PropertyObject;
+import com.core.model.Model;
 import com.core.parse.JSONParser;
+import com.core.populate.JSONPopulator;
 
 
 public class JSONObject extends PropertyObject {
@@ -9,6 +11,15 @@ public class JSONObject extends PropertyObject {
 	public static JSONObject of(String source) {
 
 		return new JSONParser().parse(source);
+	}
+
+	public static JSONObject of(Model source) {
+
+		JSONObject target = new JSONObject();
+
+		new JSONPopulator().populate(target, source);
+
+		return target;
 	}
 
 	public JSONObject() {

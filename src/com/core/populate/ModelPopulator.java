@@ -13,7 +13,7 @@ public class ModelPopulator<T extends Model> extends AutoPopulator<T> {
 
 		try {
 
-			target.setId(source.getString("id"));
+			target.setId(source.getInt("id"));
 
 			super.populate(target, source);
 		}

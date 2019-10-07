@@ -2,14 +2,14 @@ package com.core.model;
 
 public class Model {
 
-	private String id;
+	private Integer id;
 
-	public String getId() {
+	public Integer getId() {
 
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 
 		this.id = id;
 	}

@@ -95,8 +95,7 @@ public class JSONParser implements Parser<JSONObject, String> {
 
 					json += compose((JSONObject) obj);
 				}
-
-				if(obj instanceof JSONObject[]) {
+				else if(obj instanceof JSONObject[]) {
 
 					List<String> subList = new ArrayList<>();
 
@@ -110,35 +109,37 @@ public class JSONParser implements Parser<JSONObject, String> {
 
 					json += "[" + String.join(", ", subList) + "]";
 				}
-
-				if(obj instanceof String) {
+				else if(obj instanceof String) {
 
 					json += "\"" + obj.toString() + "\"";
 				}
-
-				if(obj instanceof Character) {
+				else if(obj instanceof Character) {
 
 					json += "'" + obj.toString() + "'";
 				}
-
-				if(obj instanceof Boolean) {
+				else if(obj instanceof Boolean) {
 
 					json += obj.toString();
 				}
+				else if(obj instanceof Integer) {
 
-				if(obj instanceof Double) {
+					json += obj.toString();
+				}
+				else if(obj instanceof Double) {
 
 					json += obj.toString() + "D";
 				}
-
-				if(obj instanceof Float) {
+				else if(obj instanceof Float) {
 
 					json += obj.toString() + "F";
 				}
-
-				if(obj instanceof Long) {
+				else if(obj instanceof Long) {
 
 					json += obj.toString() + "L";
+				}
+				else {
+
+					json += "null";
 				}
 
 				childList.add(json);
