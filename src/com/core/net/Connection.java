@@ -20,8 +20,8 @@ import com.core.base.Environment;
  * @version 1.3.4
  * @author Prototype Studio
  */
-public class Connection {
-
+public class Connection
+{
 	public final String CRLF = "\r\n";
 	public final String LF = "\n";
 	public final Charset CHARSET = StandardCharsets.ISO_8859_1;
@@ -42,8 +42,8 @@ public class Connection {
 	 * @param host Is the IP address to connect on
 	 * @param port Is the Channel to bind
 	 **/
-	public Connection(String host, int port) {
-
+	public Connection(String host, int port)
+	{
 		this(host, port, false);
 	}
 
@@ -52,8 +52,8 @@ public class Connection {
 	 * 
 	 * @param socket Is the socket
 	 **/
-	public Connection(Socket socket) {
-
+	public Connection(Socket socket)
+	{
 		this(socket.getInetAddress().getHostAddress(), socket.getPort(), socket.getPort() == 443);
 		this.socket = socket;
 	}
@@ -65,8 +65,8 @@ public class Connection {
 	 * @param port  Is the Channel to bind
 	 * @param isSSL If a SSL connection should be used
 	 **/
-	public Connection(String host, int port, boolean isSSL) {
-
+	public Connection(String host, int port, boolean isSSL)
+	{
 		this.host = host;
 		this.port = port;
 		this.isSSL = isSSL;
@@ -79,19 +79,19 @@ public class Connection {
 	 * 
 	 * @param runnable Is the method who handle the connection
 	 **/
-	public void connect(Runnable runnable) {
-
-		try {
-
-			if(socket == null) {
-
-				if(isSSL) {
-
+	public void connect(Runnable runnable)
+	{
+		try
+		{
+			if(socket == null)
+			{
+				if(isSSL)
+				{
 					SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
 					socket = factory.createSocket(InetAddress.getByName(host), port);
 				}
-				else {
-
+				else
+				{
 					socket = new Socket(host, port);
 				}
 			}
@@ -102,8 +102,8 @@ public class Connection {
 
 			new Thread(runnable).start();
 		}
-		catch(Exception ex) {
-
+		catch(Exception ex)
+		{
 			ex.printStackTrace();
 		}
 	}
@@ -111,8 +111,8 @@ public class Connection {
 	/**
 	 * Closes the connection
 	 **/
-	public void quit() throws IOException {
-
+	public void quit() throws IOException
+	{
 		socket.close();
 	}
 
@@ -121,8 +121,8 @@ public class Connection {
 	 * 
 	 * @param data Is the value who would be send
 	 **/
-	public void emit(String data) throws IOException {
-
+	public void emit(String data) throws IOException
+	{
 		emit(data.getBytes(CHARSET));
 	}
 
@@ -132,8 +132,8 @@ public class Connection {
 	 * @param data   Is the value who would be send
 	 * @param base64 Defines if it would be converted to Base64
 	 **/
-	public void emit(String data, boolean base64) throws IOException {
-
+	public void emit(String data, boolean base64) throws IOException
+	{
 		emit(data.getBytes(CHARSET), base64);
 	}
 
@@ -142,8 +142,8 @@ public class Connection {
 	 * 
 	 * @param data Is the value who would be send
 	 **/
-	public void emit(byte[] data) throws IOException {
-
+	public void emit(byte[] data) throws IOException
+	{
 		out.write(data);
 		out.write(LINE_BREAK);
 		out.flush();
@@ -155,24 +155,24 @@ public class Connection {
 	 * @param data   Is the value who would be send
 	 * @param base64 Defines if it would be converted to Base64
 	 **/
-	public void emit(byte[] data, boolean base64) throws IOException {
-
+	public void emit(byte[] data, boolean base64) throws IOException
+	{
 		emit(Base64.getEncoder().encode(data));
 	}
 
 	/**
 	 * Reads incoming data as String
 	 **/
-	public String readLine() throws IOException {
-
+	public String readLine() throws IOException
+	{
 		return reader.readLine();
 	}
 
 	/**
 	 * Reads incoming data as String by a specific length
 	 */
-	public byte[] read(int length) throws IOException {
-
+	public byte[] read(int length) throws IOException
+	{
 		char[] buffer = new char[length];
 
 		reader.read(buffer, 0, length);
@@ -180,38 +180,38 @@ public class Connection {
 		return String.valueOf(buffer).getBytes(CHARSET);
 	}
 
-	public Socket getSocket() {
-
+	public Socket getSocket()
+	{
 		return socket;
 	}
 
-	public BufferedReader getReader() {
-
+	public BufferedReader getReader()
+	{
 		return reader;
 	}
 
-	public InputStream getIn() {
-
+	public InputStream getIn()
+	{
 		return in;
 	}
 
-	public OutputStream getOut() {
-
+	public OutputStream getOut()
+	{
 		return out;
 	}
 
-	public String getHost() {
-
+	public String getHost()
+	{
 		return host;
 	}
 
-	public int getPort() {
-
+	public int getPort()
+	{
 		return port;
 	}
 
-	public boolean isSSL() {
-
+	public boolean isSSL()
+	{
 		return isSSL;
 	}
 }

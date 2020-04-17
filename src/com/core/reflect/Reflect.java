@@ -10,8 +10,8 @@ import com.core.lang.Property;
  * @version 1.3.4
  * @author Prototype Studio
  */
-public class Reflect {
-
+public class Reflect
+{
 	/**
 	 * Creates a new instance of a class
 	 * 
@@ -19,8 +19,8 @@ public class Reflect {
 	 * @return New instance of class
 	 * @throws Exception
 	 */
-	public static Object newInstance(Class<?> type) throws Exception {
-
+	public static Object newInstance(Class<?> type) throws Exception
+	{
 		return type.getConstructor().newInstance();
 	}
 
@@ -31,20 +31,20 @@ public class Reflect {
 	 * @param args List of injectable objects
 	 * @throws Exception
 	 */
-	public static <T> void inject(T type, Property<Object> args) throws Exception {
-
-		if(type instanceof Injectable) {
-
-			for(Field field : type.getClass().getDeclaredFields()) {
-
-				for(Annotation annotation : field.getAnnotations()) {
-
-					if(annotation instanceof Inject) {
-
-						for(String key : args.keys()) {
-
-							if(((Inject) annotation).code().equals(key)) {
-
+	public static <T> void inject(T type, Property<Object> args) throws Exception
+	{
+		if(type instanceof Injectable)
+		{
+			for(Field field : type.getClass().getDeclaredFields())
+			{
+				for(Annotation annotation : field.getAnnotations())
+				{
+					if(annotation instanceof Inject)
+					{
+						for(String key : args.keys())
+						{
+							if(((Inject) annotation).code().equals(key))
+							{
 								field.setAccessible(true);
 								field.set(type, args.get(key));
 							}

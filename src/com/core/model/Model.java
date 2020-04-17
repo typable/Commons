@@ -1,16 +1,16 @@
 package com.core.model;
 
-public class Model {
-
+public class Model
+{
 	private Integer id;
 
-	public Integer getId() {
-
+	public Integer getId()
+	{
 		return id;
 	}
 
-	public void setId(int id) {
-
+	public void setId(int id)
+	{
 		this.id = id;
 	}
 }

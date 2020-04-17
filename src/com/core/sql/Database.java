@@ -12,42 +12,42 @@ import java.util.Map;
 import com.core.model.Model;
 
 
-public class Database {
-
+public class Database
+{
 	private String url;
 
-	public Database(String url) {
-
+	public Database(String url)
+	{
 		this.url = url;
 	}
 
-	public <T extends Model> TypedQuery<T> query(String sql, Class<T> type) {
-
-		try(Connection connection = DriverManager.getConnection(url)) {
-
+	public <T extends Model> TypedQuery<T> query(String sql, Class<T> type)
+	{
+		try(Connection connection = DriverManager.getConnection(url))
+		{
 			Statement statement = connection.createStatement();
 
 			ResultSet set = statement.executeQuery(sql);
 
-			if(set != null) {
-
+			if(set != null)
+			{
 				TypedQuery<T> query = new TypedQuery<>();
 				ResultSetMetaData meta = set.getMetaData();
 
-				while(set.next()) {
-
+				while(set.next())
+				{
 					T model = type.getConstructor().newInstance();
 
 					int count = meta.getColumnCount();
 
-					for(int i = 1; i < count + 1; i++) {
-
+					for(int i = 1; i < count + 1; i++)
+					{
 						String name = meta.getColumnName(i);
 
-						for(Field field : type.getSuperclass().getDeclaredFields()) {
-
-							if(field.getName().equals(name)) {
-
+						for(Field field : type.getSuperclass().getDeclaredFields())
+						{
+							if(field.getName().equals(name))
+							{
 								Object value = field.getType().cast(set.getObject(name));
 
 								field.setAccessible(true);
@@ -55,10 +55,10 @@ public class Database {
 							}
 						}
 
-						for(Field field : type.getDeclaredFields()) {
-
-							if(field.getName().equals(name)) {
-
+						for(Field field : type.getDeclaredFields())
+						{
+							if(field.getName().equals(name))
+							{
 								Object value = field.getType().cast(set.getObject(name));
 
 								field.setAccessible(true);
@@ -73,40 +73,40 @@ public class Database {
 				return query;
 			}
 		}
-		catch(Exception ex) {
-
+		catch(Exception ex)
+		{
 			ex.printStackTrace();
 		}
 
 		return null;
 	}
 
-	public <T extends Model> TypedQuery<T> search(String table, Map<String, Object> conditions, Class<T> type) {
-
+	public <T extends Model> TypedQuery<T> search(String table, Map<String, Object> conditions, Class<T> type)
+	{
 		String sql = "SELECT * FROM " + table;
 
-		if(conditions != null && !conditions.isEmpty()) {
-
+		if(conditions != null && !conditions.isEmpty())
+		{
 			String where = "";
 
-			for(String key : conditions.keySet()) {
-
+			for(String key : conditions.keySet())
+			{
 				Object value = conditions.get(key);
 
-				if(value instanceof String) {
-
-					if(where.length() != 0) {
-
+				if(value instanceof String)
+				{
+					if(where.length() != 0)
+					{
 						where += " AND";
 					}
 
 					where += " " + key + " LIKE '" + value.toString() + "'";
 				}
 
-				if(value instanceof Integer || value instanceof Double || value instanceof Float || value instanceof Short || value instanceof Long) {
-
-					if(where.length() != 0) {
-
+				if(value instanceof Integer || value instanceof Double || value instanceof Float || value instanceof Short || value instanceof Long)
+				{
+					if(where.length() != 0)
+					{
 						where += " AND";
 					}
 
@@ -120,24 +120,24 @@ public class Database {
 		return query(sql, type);
 	}
 
-	public boolean execute(String sql) {
-
-		try(Connection connection = DriverManager.getConnection(url)) {
-
+	public boolean execute(String sql)
+	{
+		try(Connection connection = DriverManager.getConnection(url))
+		{
 			Statement statement = connection.createStatement();
 
 			return statement.execute(sql);
 		}
-		catch(SQLException ex) {
-
+		catch(SQLException ex)
+		{
 			ex.printStackTrace();
 		}
 
 		return false;
 	}
 
-	public String getUrl() {
-
+	public String getUrl()
+	{
 		return url;
 	}
 }

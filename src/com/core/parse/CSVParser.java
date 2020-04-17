@@ -3,13 +3,13 @@ package com.core.parse;
 import com.core.type.CSVObject;
 
 
-public class CSVParser implements Parser<CSVObject, String> {
-
+public class CSVParser implements Parser<CSVObject, String>
+{
 	private String delimiter = ",";
 
 	@Override
-	public CSVObject parse(String source) {
-
+	public CSVObject parse(String source)
+	{
 		CSVObject target = null;
 
 		String[] args = source.split("\r\n");
@@ -18,8 +18,8 @@ public class CSVParser implements Parser<CSVObject, String> {
 
 		target = new CSVObject(keys);
 
-		for(int i = 1; i < args.length; i++) {
-
+		for(int i = 1; i < args.length; i++)
+		{
 			String[] values = args[i].replaceAll("\\s", "").split(delimiter);
 
 			target.add((Object[]) values);
@@ -29,29 +29,29 @@ public class CSVParser implements Parser<CSVObject, String> {
 	}
 
 	@Override
-	public String compose(CSVObject source) {
-
+	public String compose(CSVObject source)
+	{
 		String target = "";
 
-		for(String key : source.getMap().keys()) {
-
+		for(String key : source.getMap().keys())
+		{
 			target += key + delimiter;
 		}
 
 		target += "\r\n";
 
-		for(int i = 0; i < source.size(); i++) {
-
+		for(int i = 0; i < source.size(); i++)
+		{
 			Object[] array = source.get(i);
 
-			for(Object obj : array) {
-
-				if(obj == null) {
-
+			for(Object obj : array)
+			{
+				if(obj == null)
+				{
 					target += ";";
 				}
-				else {
-
+				else
+				{
 					target += String.valueOf(obj) + delimiter;
 				}
 			}
@@ -62,13 +62,13 @@ public class CSVParser implements Parser<CSVObject, String> {
 		return target;
 	}
 
-	public String getDelimiter() {
-
+	public String getDelimiter()
+	{
 		return delimiter;
 	}
 
-	public void setDelimiter(String delimiter) {
-
+	public void setDelimiter(String delimiter)
+	{
 		this.delimiter = delimiter;
 	}
 }
